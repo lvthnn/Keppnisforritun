@@ -36,6 +36,14 @@ int main() {
   }
 
   ll num_elements = n;
+  // Í raun óþarfi að raða þessum lista
+  // getum reiknað lokað snið með
+  //
+  // ∑_{i = 1}^k (i * h_i)
+  //
+  // sjá útskýringu á glærum.
+  // Ef fallið er h_1 = h_2 = ... = h_k svo k = n
+  /// þá er svarið ∑_{i = 1}^k i * h_i = ∑_{i = 1}^n i = n(n + 1)/2
   sort(nums.begin(), nums.end(), cmp_ii);
   for (ll i = 0; i < nums.size(); i++) {
     n -= nums[i].second;
