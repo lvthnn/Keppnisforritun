@@ -1,15 +1,30 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
+#include <stack>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 
 int main() {
-  string a;
-  cin >> a;
+  
+  string input;
+  cin >> input;
 
-  for (int i = a.size()-1; i > 0; i--)
-    if (a[i] != '<') cout << a[i-1];
+  stack<char> Q;
+  for (int i = 0; i < input.size(); i++) {
+    char curr = input[i];
+    if (curr == '<') Q.pop();
+    else Q.push(curr);
+  }
 
+  string res;
+  while (!Q.empty()) {
+    res += Q.top();
+    Q.pop();
+  }
+
+  reverse(res.begin(), res.end());
+  cout << res;
+
+  return 0;
 }
