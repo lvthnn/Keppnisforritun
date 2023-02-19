@@ -25,7 +25,7 @@ class UnionFind {
       return p;
     }
 
-    void union_of(int p, int q) {
+    void join(int p, int q) {
       int i = find(p);
       int j = find(q);
       if (i == j) return;
@@ -48,7 +48,7 @@ int main() {
     if (t == 't') {
       cin >> p1 >> p2;
       p1 -= 1; p2 -= 1;
-      uf.union_of(p1, p2);
+      uf.join(p1, p2);
     }
 
     else if (t == 's') {
