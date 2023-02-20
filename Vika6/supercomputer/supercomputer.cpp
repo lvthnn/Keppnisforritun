@@ -61,11 +61,10 @@ class SegmentTree {
      * @param j query end in st array
      */
     void bfq(int p, int x, int i, int j) {
-      if (i == j)
-        st[p] = abs(st[p] - 1);
+      if (i == j) // only satisfied when we find matching element
+        st[p] += 1;
       else {
         int m = (i + j)/2;
-
         // determine interval to search in
         if (x <= m) bfq(left(p), x, i, m);
         else        bfq(right(p), x, m+1, j);
@@ -84,7 +83,7 @@ class SegmentTree {
 
     int rsq(int i, int j) { return rsq(1, 0, n - 1, i - 1, j - 1); } // overload for client use
 
-    void bfq(int p) { return bfq(p, 1, n - 1); }
+    void bfq(int x) { return bfq(1, x-1, 0, n - 1); }
 
     void print() { for (int i = 0; i < st.size(); i++) cout << st[i] << endl; }
 
@@ -98,8 +97,5 @@ int main() {
   int arr[n] = {0}; 
   vector<int> A(arr, arr + 7);
   SegmentTree st(A);
-
-  st.bfq(4, 3);
-  cout << st.rsq(1, 3) << endl;
 
 }
