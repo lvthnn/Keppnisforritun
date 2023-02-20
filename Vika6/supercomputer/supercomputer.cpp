@@ -43,13 +43,13 @@ class SegmentTree {
       if (L >= i && R <= j) return st[p];
 
       int M = (L+R)/2; // middle of segment
-      int sum_L  = rsq(left(p),  L,   M, i, j);
-      int sum_R  = rsq(right(p), M+1, R, i, j);
+      int p1  = rsq(left(p),  L,   M, i, j);
+      int p2  = rsq(right(p), M+1, R, i, j);
 
-      if (sum_L == -1) return sum_R;
-      if (sum_R == -1) return sum_L;
+      if (p1 == -1) return p2;
+      if (p2 == -1) return p1;
 
-      return sum_L + sum_R;
+      return p1 + p2;
     }
 
     /**
@@ -60,13 +60,17 @@ class SegmentTree {
      * @param i query start in st array
      * @param j query end in st array
      */
-    void bfq(int p, int i, int j) {
+    void bfq(int p, int x, int i, int j) {
       if (i == j)
-        st[p] = st[p] ^ 1;
+        st[p] = abs(st[p] - 1);
       else {
         int m = (i + j)/2;
-        if (p <= m) bfq(left(p), i, m);
-        else bfq(right(p), m+1, j);
+
+        // determine interval to search in
+        if (x <= m) bfq(left(p), x, i, m);
+        else        bfq(right(p), x, m+1, j);
+
+        // update sum of parent
         st[p] = st[left(p)] + st[right(p)];
     } }
 
@@ -80,7 +84,7 @@ class SegmentTree {
 
     int rsq(int i, int j) { return rsq(1, 0, n - 1, i - 1, j - 1); } // overload for client use
 
-    void bfq(int p) { return bfq(p, 0, n - 1); }
+    void bfq(int p) { return bfq(p, 1, n - 1); }
 
     void print() { for (int i = 0; i < st.size(); i++) cout << st[i] << endl; }
 
@@ -95,21 +99,7 @@ int main() {
   vector<int> A(arr, arr + 7);
   SegmentTree st(A);
 
-  while(k-- > 0) {
-    char t;
-    cin >> t;
-
-    int p1, p2;
-
-    if (t == 'F') {
-      cin >> p1;
-      st.bfq(p1);
-    }
-    else if (t == 'C') {
-      cin >> p1 >> p2;
-      cout << st.rsq(p1, p2) << endl;
-    }
-
-  }
+  st.bfq(4, 3);
+  cout << st.rsq(1, 3) << endl;
 
 }
