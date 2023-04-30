@@ -2,6 +2,29 @@
 
 using namespace std;
 
+/**
+ * Returns the differential sequence given an
+ * integer array.
+ *
+ * @param a the integer array
+ */
+void seq_diff(int *a, int *diffa, int n) {
+  int t = a[0];
+
+  for (int i = 0; i < n; i++) {
+    diffa[i] = a[i + 1] - t;
+    t = a[i + 1];
+  }
+} 
+
+/**
+ * Prefix function for the Knuth-Morris-Pratt
+ * substring search algorithm.
+ *
+ * @param a the target string
+ * @param b the substring
+ * @param m length of substring
+ */
 void prefix_function(int *a, int *b, int m)
 {
     int i, j;
@@ -9,6 +32,15 @@ void prefix_function(int *a, int *b, int m)
         while (j >= 0 && a[i] != a[j]) j = b[j];
 }
 
+/**
+ * Knuth-Morris-Pratt algorithm for substring
+ * searching in O(N) time
+ *
+ * @param s the target string
+ * @param p the substring
+ * @param r 
+ *
+ */
 void kmp(int *s, int *p, int *r, int n, int m)
 {
     int i, j, b[n + m + 2];
@@ -19,18 +51,43 @@ void kmp(int *s, int *p, int *r, int n, int m)
     for (i = 0; i < n; i++) r[i] = i < n - m + 1 && b[i + 2*m + 1] >= m;
 }
 
+void print_array(int *a, int n) {
+  for (int i = 0; i < n; i++)
+    cout << a[i] << " ";
+  cout << endl;
+}
+
 int main()
 {
-    int i, n, m;
-    scanf("%d%d", &m, &n);
-    int a[m], b[n], r[n];
-    for (i = 0; i < m; i++) scanf("%d", a + i);
-    for (i = 0; i < n; i++) scanf("%d", b + i);
-    for (i = 0; i < n; i++) r[i] = 0;
+  // Read in n and m
+  int m, n;
+  cin >> m >> n;
 
-    kmp(a, b, r, n, m);
-    for (i = 0; i < n; i++)
-      cout << r[i] << endl;
+  // Pattern, mountain range, auxiliary
+  int a[m], b[n], r[n - 1], diffa[m - 1], diffb[n - 1];
 
-    return 0;
+  // Cheeky reading of arrays
+  for (int i = 0; i < n + m; i++) { 
+    int t;
+    cin >> t;
+
+    if (i < m) a[i] = t;
+    else b[i - m] = t;
+  }
+
+  seq_diff(a, diffa, m);
+  seq_diff(b, diffb, n - 1);
+  kmp(diffb, diffa, r, n - 1, m - 1);
+
+  bool tyndur = 1;
+  for (int i = 0; i < n - 1; i++) {
+    if (r[i] == 1) {
+      cout << i << " ";
+      tyndur = 0;
+    }
+  }
+  if (tyndur) cout << "tyndur";
+
+  return 0;
+
 }
