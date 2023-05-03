@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #include <iostream>
 #include <vector>
-#define INF (1 << 30)
+#define INF (1LL << 60)
 
 using namespace std;
 
