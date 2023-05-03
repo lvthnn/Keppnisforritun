@@ -9,5 +9,5 @@ Repo-ið inniheldur fullnægjandi skilum fyrir eftirfarandi 10 vikur:
 - Vika 8 — Aukaskil
 - Vika 9 — Netafræði
 - Vika 10 — Talnafræði
-— Vika 14 — Lokakeppni
-— Vika 15 — Aukaskil
+- Vika 14 — Lokakeppni
+- Vika 15 — Aukaskil
